@@ -16,6 +16,7 @@
     <link rel="icon" type="image/svg+xml" href="https://graphics.goodhearttech.org/GHT/favicons/favicon.svg">
     <script src="lib/qrcode.min.js"></script>
     <link rel="stylesheet" href="ght-variables.css">
+    <link rel="stylesheet" href="ght-buttons.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -46,20 +47,9 @@
 
         h1 { color: var(--ght-palette-rich-black); margin-bottom: 20px; font-size: 2.5em; font-weight: var(--ght-font-weight-bold); }
 
-        .tabs { display: flex; margin-bottom: 20px; width: 100%; border-bottom: 2px solid var(--ght-palette-hudu-primary); padding: 5px 5px 0 5px; }
-
-        .tab {
-            flex: 1;
-            padding: 15px;
-            cursor: pointer;
-            color: var(--ght-palette-charcoal);
-            font-weight: var(--ght-font-weight-semibold);
-            transition: all 0.3s ease;
-            border-radius: 10px 10px 0 0;
-            background-color: transparent;
-        }
-        .tab:hover { color: var(--ght-palette-rich-black); background-color: var(--ght-palette-hudu-light); }
-        .tab.active, .tab.active:hover { color: var(--ght-palette-white); background-color: var(--ght-palette-hudu-primary); }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; width: 100%; }
+        .tab { flex: 1; }
+        .tab.active, .tab.active:hover { color: var(--ght-palette-white); background: var(--ght-palette-hudu-primary); border-color: var(--ght-palette-hudu-primary); }
 
         .input-group { margin-bottom: 20px; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto; }
         .input-group label { display: block; text-align: left; margin-bottom: 5px; color: var(--ght-palette-rich-black); font-weight: var(--ght-font-weight-semibold); }
@@ -89,22 +79,7 @@
             display: none;
         }
 
-        button {
-            background-color: var(--ght-palette-primary);
-            color: var(--ght-palette-rich-black);
-            border: none;
-            padding: 15px 40px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-family: inherit;
-            font-weight: var(--ght-font-weight-semibold);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 5px;
-        }
-        button:hover { background-color: var(--ght-palette-hudu-primary); color: var(--ght-palette-white); transform: translateY(-2px); }
-        button:focus-visible, .tab:focus-visible { outline: 3px solid var(--ght-palette-rich-black); outline-offset: 2px; }
-        button:disabled { background-color: var(--ght-palette-hudu-light); color: var(--ght-palette-charcoal); cursor: not-allowed; transform: none; }
+        .form-group .ght-btn { margin: 5px; }
 
         /* QR code: dark modules on a light background so it stays scannable */
         #qrcode {
@@ -168,8 +143,8 @@
         </div>
         
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('url')">URL or App Link</div>
-            <div class="tab" onclick="switchTab('wifi')">WiFi</div>
+            <button type="button" class="ght-btn tab active" onclick="switchTab('url')" aria-pressed="true">URL or App Link</button>
+            <button type="button" class="ght-btn tab" onclick="switchTab('wifi')" aria-pressed="false">WiFi</button>
         </div>
 
         <div class="form-group active" id="urlForm">
@@ -178,7 +153,7 @@
                 <input type="text" id="urlInput" placeholder="https:// or app://" />
                 <div class="error" id="urlError" role="alert">Error: Please enter a valid URL or app link (must contain ://)</div>
             </div>
-            <button onclick="generateUrlQR()" id="generateUrlBtn">Generate QR Code</button>
+            <button type="button" class="ght-btn ght-btn--primary" onclick="generateUrlQR()" id="generateUrlBtn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm8-2h2v2h-2v-2zm2 2h2v2h-2v-2zm2-2h4v2h-4v-2zm-4 4h2v2h-2v-2zm4 0h2v4h-4v-2h2v-2zm-4 4h2v2h-2v-2z"/></svg> Generate QR code</button>
         </div>
 
         <div class="form-group" id="wifiForm">
@@ -198,13 +173,13 @@
                     <option value="nopass">No Password</option>
                 </select>
             </div>
-            <button onclick="generateWifiQR()" id="generateWifiBtn">Generate QR Code</button>
+            <button type="button" class="ght-btn ght-btn--primary" onclick="generateWifiQR()" id="generateWifiBtn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm8-2h2v2h-2v-2zm2 2h2v2h-2v-2zm2-2h4v2h-4v-2zm-4 4h2v2h-2v-2zm4 0h2v4h-4v-2h2v-2zm-4 4h2v2h-2v-2z"/></svg> Generate QR code</button>
         </div>
 
         <div id="qrcode" role="img"></div>
         <div class="download-buttons" id="downloadButtons">
-            <button onclick="downloadQR('png')">Download as PNG</button>
-            <button onclick="downloadQR('jpeg')">Download as JPEG</button>
+            <button type="button" class="ght-btn" onclick="downloadQR('png')"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg> Download as PNG</button>
+            <button type="button" class="ght-btn" onclick="downloadQR('jpeg')"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg> Download as JPEG</button>
         </div>
     </main>
 
@@ -225,8 +200,10 @@
     <script>
         function switchTab(tab) {
             // Update tabs
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`.tab:nth-child(${tab === 'url' ? '1' : '2'})`).classList.add('active');
+            document.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-pressed', 'false'); });
+            const activeTab = document.querySelector(`.tab:nth-child(${tab === 'url' ? '1' : '2'})`);
+            activeTab.classList.add('active');
+            activeTab.setAttribute('aria-pressed', 'true');
             
             // Update forms
             document.querySelectorAll('.form-group').forEach(f => f.classList.remove('active'));
@@ -319,11 +296,20 @@
 
         function downloadQR(format) {
             const img = document.querySelector('#qrcode img');
-            if (!img) return;
+            if (!img || !img.src) return;
+
+            // Redraw onto a white canvas so JPEG is a real JPEG (no transparency)
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth || 300;
+            canvas.height = img.naturalHeight || 300;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
             const link = document.createElement('a');
-            link.download = `qr-code.${format}`;
-            link.href = img.src;
+            link.download = `qr-code.${format === 'jpeg' ? 'jpg' : 'png'}`;
+            link.href = canvas.toDataURL(format === 'jpeg' ? 'image/jpeg' : 'image/png', 0.95);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
